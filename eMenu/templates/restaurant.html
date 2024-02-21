@@ -1,0 +1,64 @@
+{% extends 'home.html' %}
+{% load auth_extras %}
+{% block content %}
+    <div class="description-div center-div">
+        <div>
+            <h1>{{ restaurant.name }}</h1>
+        </div>
+        <div>
+            <h4>{{ restaurant.description }}</h4>
+        </div>
+        <div>
+            <h3>Category: {{ restaurant.category }}</h3>
+        </div>
+        <div>
+            <h4>Opening hours:</h4>
+        </div>
+        <div>
+            {% for hour in restaurant.openinghours_set.all %}
+                <div class="center">{{ hour.get_day_of_the_week_display }}: {{ hour.from_hour }}-{{ hour.to_hour }}</div>
+            {% endfor %}
+        </div>
+
+
+        <div class="logo">
+            <h1>Menus:</h1>
+        </div>
+    </div>
+
+    <div class="head-div">
+            <div class="div3">
+                <h2>Menu name</h2>
+            </div>
+            <div class="div3">
+                <h2>Description</h2>
+            </div>
+            <div class="div3">
+                <h2>Category</h2>
+            </div>
+    </div>
+    <ol>
+    {% for menu in restaurant.menu_set.all %}
+        <li>
+            <div class="div3">
+                 <h2><a href="{% url "menu" menu.id %}">{{ menu.name }}</a></h2>
+            </div>
+            <div class="div3 description">
+                {{ menu.description }}
+            </div>
+            <div class="div3">
+                <h3>{{ menu.restaurant.category }}</h3>
+            </div>
+        </li>
+    {% endfor %}
+    </ol>
+    <div class="center-div">
+        <div>
+        <h2><a href="{% url "reservation-date" restaurant.id %}">Make reservation for 4 or less people</a></h2>
+        </div>
+        <div>
+        <h2><a href="{% url "contact" restaurant.id %}">Contact us for larger bookings</a></h2>
+        </div>
+    </div>
+
+{% endblock content %}

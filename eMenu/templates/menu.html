@@ -1,0 +1,65 @@
+{% extends 'home.html' %}
+{% block content %}
+    <div class="description-div center-div">
+        <div>
+            <h1>{{ menu.name }}</h1>
+        </div>
+        <div>
+            {{ menu.description }}
+        </div>
+        <div>
+            <h2>Restaurant: <a href="{% url "restaurant" menu.restaurant.id %}">{{ menu.restaurant.name }}</a></h2>
+        </div>
+        <div>
+            <h3>Category: {{ menu.restaurant.category }}</h3>
+        </div>
+
+
+        <div class="logo">
+            <h2>Dishes:</h2>
+        </div>
+
+
+
+    </div>
+        <div class="head-div">
+            <div style="width: 25%">
+                <h2>Name</h2>
+            </div>
+            <div style="width: 30%">
+                <h2>Description</h2>
+            </div>
+            <div style="width: 15%">
+                <h2>Price</h2>
+            </div>
+            <div style="width: 15%">
+                <h2>Preparation</h2>
+            </div>
+            <div class="center" style="width: 15%">
+                <h2>Wegetarian</h2>
+            </div>
+        </div>
+        <ol>
+            {% for elem in menu.dish_set.all %}
+                <li>
+                    <div style="width: 25%">
+                        <h3>{{ elem.name }}</h3>
+                    </div>
+                    <div class="description" style="width: 30%">
+                        {{ elem.description }}
+                    </div>
+                    <div class="description" style="width: 15%">
+                        {{ elem.price }} PLN
+                    </div>
+                    <div class="description" style="width: 15%">
+                        {{ elem.preparation_time }} minutes
+                    </div>
+                    <div class="center" style="width: 15%">
+                        {% if elem.is_wegetarian %}
+                        &#9989;
+                    {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ol>
+{% endblock content %}
